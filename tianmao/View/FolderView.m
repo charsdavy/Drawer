@@ -13,6 +13,8 @@
 #define kProductCellHeight 80
 #define kSubViewHeight 200
 
+typedef CGRect(^newFrame)(CGFloat up, CGFloat down, NSIndexPath *path, UITableViewCell *cell);
+
 @interface FolderView ()
 
 /**
@@ -55,7 +57,7 @@
     return self;
 }
 
-#pragma mark - 抽屉操作
+#pragma mark 抽屉操作
 -(void)operateFolderAtIndexPath:(NSIndexPath *)indexPath shopList:(NSArray *)shopList{
     /**
      *  选中某一行表格后，将下方的表格向下移动kSubViewHeight的高度
@@ -68,28 +70,7 @@
      如果animationRows数组已经存在，说明抽屉已经打开，做关闭抽屉操作。
      */
     if ([self.animationRows count] != 0) {
-        /**
-         关闭抽屉，就是把所有动画行复位
-         要复位，需要知道动画行的初始位置
-         要在挪动表格行之前纪录对应的初始位置Y值
-         注意：tag是整数，Y值是浮点数，因此不能用tag记录
-         */
-        
-        [UIView animateWithDuration:1.0f animations:^{
-            //1)遍历数组，还原所有动画行的Y值
-            for (NSIndexPath *path in self.animationRows) {
-                ShopTypeCell *cell = (ShopTypeCell *)[self cellForRowAtIndexPath:path];
-                CGRect frame = cell.frame;
-                frame.origin.y = cell.originY;
-                [cell setFrame:frame];
-            }
-        } completion:^(BOOL finished) {
-            //2)删除animationRows
-            [self.animationRows removeAllObjects];
-            //3)从主视图中移除子视图
-            [self.shopListController.view removeFromSuperview];
-        }];
-        
+        [self closeFolder];
         return;
     }
     
@@ -124,43 +105,27 @@
         CGFloat up = tableHeight + offsetY - kSubViewHeight - subViewY;
         subViewY = tableHeight + offsetY - kSubViewHeight;
         CGFloat down = kSubViewHeight + up;
-        [UIView animateWithDuration:1.0f animations:^{
-            //遍历数组，挪动单元格
-            for (NSIndexPath *path in array) {
-                //取出要挪动的表格行
-                ShopTypeCell *cell = (ShopTypeCell *)[self cellForRowAtIndexPath:path];
-                //记录初始Y值
-                cell.originY = cell.frame.origin.y;
-                
-                CGRect newFrame = cell.frame;
-                //小于或等于选中行的向上挪
-                if (path.row <= indexPath.row) {
-                    newFrame.origin.y += up;
-                }else{
-                    //大于的向下
-                    newFrame.origin.y += down;
-                }
-                [cell setFrame:newFrame];
-            }
-        }];
         
+        [self openFolderFromIndexPath:indexPath up:up down:down newFrame:^CGRect(CGFloat up, CGFloat down, NSIndexPath *path, UITableViewCell *cell) {
+            CGRect newFrame = cell.frame;
+            //小于或等于选中行的向上挪
+            if (path.row <= indexPath.row) {
+                newFrame.origin.y += up;
+            }else{
+                //大于的向下
+                newFrame.origin.y += down;
+            }
+            return newFrame;
+        }];        
     }else{
         NSLog(@"空间足够");
-        [UIView animateWithDuration:1.0f animations:^{
-            for (NSIndexPath *path in array) {
-                //1.取出要挪动的表格行
-                ShopTypeCell *cell = (ShopTypeCell *)[self cellForRowAtIndexPath:path];
-                //记录初始Y值
-                cell.originY = cell.frame.origin.y;
-                
-                if (path.row > indexPath.row) {
-                    //2.挪动表格行，挪动位置：frame，center
-                    //1)当前的frame
-                    CGRect frame = cell.frame;
-                    frame.origin.y += kSubViewHeight;
-                    [cell setFrame:frame];
-                }
+        [self openFolderFromIndexPath:indexPath up:0 down:self.shopListController.view.frame.size.height newFrame:^CGRect(CGFloat up, CGFloat down, NSIndexPath *path, UITableViewCell *cell) {
+            CGRect frame = cell.frame;
+            if (path.row > indexPath.row) {
+                //2.挪动表格行，挪动位置：frame，center
+                frame.origin.y += down;
             }
+            return frame;
         }];
     }
     //设置子视图
@@ -169,6 +134,47 @@
     [self.shopListController.view setFrame:subViewFrame];
     
     [self insertSubview:self.shopListController.view atIndex:0];
+}
+
+#pragma mark 打开抽屉
+-(void)openFolderFromIndexPath:(NSIndexPath *)indexPath up:(CGFloat)up down:(CGFloat)down newFrame:(newFrame)newFrame {
+    [UIView animateWithDuration:1.0f animations:^{
+        for (NSIndexPath *path in self.animationRows) {
+            //1.取出要挪动的表格行
+            ShopTypeCell *cell = (ShopTypeCell *)[self cellForRowAtIndexPath:path];
+            //记录初始Y值
+            cell.originY = cell.frame.origin.y;
+            //当前的frame，使用block
+            CGRect frame = newFrame(up, down, path, cell);
+
+            [cell setFrame:frame];
+        }
+    }];
+}
+
+#pragma mark 关闭抽屉
+-(void)closeFolder{
+    /**
+     关闭抽屉，就是把所有动画行复位
+     要复位，需要知道动画行的初始位置
+     要在挪动表格行之前纪录对应的初始位置Y值
+     注意：tag是整数，Y值是浮点数，因此不能用tag记录
+     */
+    
+    [UIView animateWithDuration:1.0f animations:^{
+        //1)遍历数组，还原所有动画行的Y值
+        for (NSIndexPath *path in self.animationRows) {
+            ShopTypeCell *cell = (ShopTypeCell *)[self cellForRowAtIndexPath:path];
+            CGRect frame = cell.frame;
+            frame.origin.y = cell.originY;
+            [cell setFrame:frame];
+        }
+    } completion:^(BOOL finished) {
+        //2)删除animationRows
+        [self.animationRows removeAllObjects];
+        //3)从主视图中移除子视图
+        [self.shopListController.view removeFromSuperview];
+    }];
 }
 
 @end
