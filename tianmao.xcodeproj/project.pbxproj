@@ -212,6 +212,7 @@
 		D5FC5A891C4A98F8008DC70F /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FC5A881C4A98F8008DC70F /* BaseModel.m */; };
 		D5FC5A8C1C4A9A23008DC70F /* Shop.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FC5A8B1C4A9A23008DC70F /* Shop.m */; };
 		D5FC5A8F1C4A9ACE008DC70F /* ShopType.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FC5A8E1C4A9ACE008DC70F /* ShopType.m */; };
+		D5FC5A921C4AAE9E008DC70F /* ShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FC5A911C4AAE9E008DC70F /* ShopListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -441,6 +442,8 @@
 		D5FC5A8B1C4A9A23008DC70F /* Shop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shop.m; sourceTree = "<group>"; };
 		D5FC5A8D1C4A9ACE008DC70F /* ShopType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopType.h; sourceTree = "<group>"; };
 		D5FC5A8E1C4A9ACE008DC70F /* ShopType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopType.m; sourceTree = "<group>"; };
+		D5FC5A901C4AAE9E008DC70F /* ShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopListViewController.h; sourceTree = "<group>"; };
+		D5FC5A911C4AAE9E008DC70F /* ShopListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -754,6 +757,8 @@
 			children = (
 				D5FC5A831C4A98D3008DC70F /* MainViewController.h */,
 				D5FC5A841C4A98D3008DC70F /* MainViewController.m */,
+				D5FC5A901C4AAE9E008DC70F /* ShopListViewController.h */,
+				D5FC5A911C4AAE9E008DC70F /* ShopListViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1065,6 +1070,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5FC5A8C1C4A9A23008DC70F /* Shop.m in Sources */,
+				D5FC5A921C4AAE9E008DC70F /* ShopListViewController.m in Sources */,
 				D5FC5A8F1C4A9ACE008DC70F /* ShopType.m in Sources */,
 				D5FC5A891C4A98F8008DC70F /* BaseModel.m in Sources */,
 				D5FC5A861C4A98D3008DC70F /* MainViewController.m in Sources */,
@@ -1268,6 +1274,7 @@
 				D5FC58F21C4A664E008DC70F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5FC58F31C4A664E008DC70F /* Build configuration list for PBXNativeTarget "tianmaoTests" */ = {
 			isa = XCConfigurationList;
@@ -1276,6 +1283,7 @@
 				D5FC58F51C4A664E008DC70F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

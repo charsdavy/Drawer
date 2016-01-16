@@ -8,6 +8,7 @@
 
 #import "FolderView.h"
 #import "ShopTypeCell.h"
+#import "ShopListViewController.h"
 
 #define kProductCellHeight 80
 #define kSubViewHeight 200
@@ -18,6 +19,11 @@
  *  动画的表格行
  */
 @property (nonatomic, strong) NSMutableArray *animationRows;
+
+/**
+ *  子类店铺的视图控制器
+ */
+@property (nonatomic, strong) ShopListViewController *shopListController;
 
 @end
 
@@ -42,6 +48,9 @@
         
         //5.顶部多滚出部分区域
         //self.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+        
+        //6.实例化子类视图控制器
+        self.shopListController = [[ShopListViewController alloc] init];
     }
     return self;
 }
@@ -78,11 +87,16 @@
             //2)删除animationRows
             [self.animationRows removeAllObjects];
             //3)从主视图中移除子视图
-            //[self.subView removeFromSuperview];
+            [self.shopListController.view removeFromSuperview];
         }];
         
         return;
     }
+    
+    //打开抽屉前需要填充商店列表中的数据
+    [self.shopListController setShopList:shopList];
+    //刷新数据
+    [self.shopListController.tableView reloadData];
     
     //新建一个数组，可以把所有可能动画的表格行的iindexPath全部记录下来
     NSMutableArray *array = [NSMutableArray arrayWithArray:[self indexPathsForVisibleRows]];
@@ -150,10 +164,11 @@
         }];
     }
     //设置子视图
-//    [self.view insertSubview:self.subView atIndex:0];
-//    CGRect subViewFrame = self.view.frame;
-//    subViewFrame.origin.y = subViewY;
-//    [self.subView setFrame:subViewFrame];
+    CGRect subViewFrame = self.shopListController.view.frame;
+    subViewFrame.origin.y = subViewY;
+    [self.shopListController.view setFrame:subViewFrame];
+    
+    [self insertSubview:self.shopListController.view atIndex:0];
 }
 
 @end
