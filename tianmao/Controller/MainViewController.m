@@ -11,20 +11,9 @@
 #import "FolderView.h"
 #import "ShopType.h"
 
-//#define kSubViewHeight 200
-
 static NSString *cellId = @"myCell";
 
 @interface MainViewController ()
-/**
- *  动画的表格行
- */
-//@property (nonatomic, strong) NSMutableArray *animationRows;
-
-/**
- *  子视图
- */
-//@property (nonatomic, strong) UIView *subView;
 
 @property (nonatomic, strong) NSArray *dataList;
 @end
@@ -41,10 +30,12 @@ static NSString *cellId = @"myCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-//    UIView *subView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, kSubViewHeight)];
-//    subView.backgroundColor = [UIColor lightGrayColor];
-//    //说明：能用addSubview方法吗？
-//    self.subView = subView;
+    // 设置标题
+    self.title = @"商品列表";    
+    // 设置导航栏背景
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"topbg.png"] forBarMetrics:UIBarMetricsDefault];
+    // 设置状态栏
+    [UIApplication sharedApplication].statusBarStyle = UIBarStyleBlackOpaque;
     
     [self initDataList];
     

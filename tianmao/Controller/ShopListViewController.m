@@ -8,10 +8,12 @@
 
 #import "ShopListViewController.h"
 #import "Shop.h"
+#import "ShopCell.h"
 
 #define kSubViewHeight 200
+#define kRow 3
 
-@interface ShopListViewController ()
+@interface ShopListViewController ()<ShopCellDelegate>
 
 @end
 
@@ -26,8 +28,8 @@
     CGRect frame = [UIScreen mainScreen].applicationFrame;
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, kSubViewHeight) style:UITableViewStylePlain];
-    
-    NSLog(@"come here");
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tmall_bg_furley.png"]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)viewDidLoad {
@@ -37,26 +39,40 @@
 
 #pragma mark - UITableViewDataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.shopList.count;
+    return ((self.shopList.count + kColumn - 1) / kColumn);
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellId = @"cellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    ShopCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[ShopCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell.delegate = self;
     }
+
+    // 截出每一行所需要的Shop对象
+    NSInteger location = indexPath.row * kColumn;
+    NSInteger length = kColumn;
+    if (location + length >= self.shopList.count) {
+        length = self.shopList.count - location;
+    }
+    NSArray *parts = [self.shopList subarrayWithRange:NSMakeRange(location, length)];
     
-    Shop *s = self.shopList[indexPath.row];
-    cell.textLabel.text = s.name;
-    cell.imageView.image = s.image;
+    // 设置Shops和行号
+    [cell setShops:parts row:(int)indexPath.row];
     
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return kShopCellHeight;
+}
+
+#pragma mark - ShopCellDelegate
+- (void)shop:(Shop *)shop clickAtRow:(int)row column:(int)column {
+    NSLog(@"%@ row:%i column:%i", shop.name, row, column);
 }
 
 - (void)didReceiveMemoryWarning {

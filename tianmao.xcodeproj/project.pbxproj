@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D5A5C7701C4B49BB0036126C /* ShopItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A5C76F1C4B49BB0036126C /* ShopItem.m */; };
+		D5A5C7731C4B4AEA0036126C /* ShopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A5C7721C4B4AEA0036126C /* ShopCell.m */; };
 		D5FC58D31C4A664E008DC70F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FC58D21C4A664E008DC70F /* main.m */; };
 		D5FC58D61C4A664E008DC70F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FC58D51C4A664E008DC70F /* AppDelegate.m */; };
 		D5FC58DC1C4A664E008DC70F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FC58DA1C4A664E008DC70F /* Main.storyboard */; };
@@ -226,6 +228,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D5A5C76E1C4B49BB0036126C /* ShopItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopItem.h; sourceTree = "<group>"; };
+		D5A5C76F1C4B49BB0036126C /* ShopItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopItem.m; sourceTree = "<group>"; };
+		D5A5C7711C4B4AEA0036126C /* ShopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopCell.h; sourceTree = "<group>"; };
+		D5A5C7721C4B4AEA0036126C /* ShopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopCell.m; sourceTree = "<group>"; };
 		D5FC58CD1C4A664E008DC70F /* tianmao.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tianmao.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FC58D11C4A664E008DC70F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5FC58D21C4A664E008DC70F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -532,6 +538,10 @@
 				D5FC58F81C4A773D008DC70F /* ShopTypeCell.m */,
 				D5FC58FA1C4A8504008DC70F /* FolderView.h */,
 				D5FC58FB1C4A8504008DC70F /* FolderView.m */,
+				D5A5C76E1C4B49BB0036126C /* ShopItem.h */,
+				D5A5C76F1C4B49BB0036126C /* ShopItem.m */,
+				D5A5C7711C4B4AEA0036126C /* ShopCell.h */,
+				D5A5C7721C4B4AEA0036126C /* ShopCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1071,12 +1081,14 @@
 			files = (
 				D5FC5A8C1C4A9A23008DC70F /* Shop.m in Sources */,
 				D5FC5A921C4AAE9E008DC70F /* ShopListViewController.m in Sources */,
+				D5A5C7731C4B4AEA0036126C /* ShopCell.m in Sources */,
 				D5FC5A8F1C4A9ACE008DC70F /* ShopType.m in Sources */,
 				D5FC5A891C4A98F8008DC70F /* BaseModel.m in Sources */,
 				D5FC5A861C4A98D3008DC70F /* MainViewController.m in Sources */,
 				D5FC58F91C4A773D008DC70F /* ShopTypeCell.m in Sources */,
 				D5FC58FC1C4A8504008DC70F /* FolderView.m in Sources */,
 				D5FC58D61C4A664E008DC70F /* AppDelegate.m in Sources */,
+				D5A5C7701C4B49BB0036126C /* ShopItem.m in Sources */,
 				D5FC58D31C4A664E008DC70F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

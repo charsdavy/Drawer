@@ -15,6 +15,8 @@
     if (self) {
         self.name = dict[@"name"];
         self.image = [UIImage imageNamed:dict[@"imageName"]];
+        self.imageName = dict[@"imageName"];
+        self.imageUrl = dict[@"imageUrl"];
     }
     return self;
 }
